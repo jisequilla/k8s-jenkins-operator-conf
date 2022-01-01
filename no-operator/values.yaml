@@ -316,23 +316,22 @@ controller:
   JCasC:
     defaultConfig: true
     configScripts: 
-      jenkins:
-        jobs:
-          - script: >
-              pipelineJob("Seed or update all pipelines") {
-              definition {
-                  cpsScm {
-                      scm {
-                          git{
-                            remote {
-                              url("https://github.com/jisequilla/k8s-jenkins-operator-conf.git")
-                            }
-                            branch("*/main")
+      jobs: |
+        - script: >
+            pipelineJob("Seed or update all pipelines") {
+            definition {
+                cpsScm {
+                    scm {
+                        git{
+                          remote {
+                            url("https://github.com/jisequilla/k8s-jenkins-operator-conf.git")
                           }
-                      }
-                  }
+                          branch("*/main")
+                        }
+                    }
                 }
               }
+            }
     #  welcome-message: |
     #    jenkins:
     #      systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
