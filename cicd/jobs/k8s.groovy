@@ -20,12 +20,11 @@ pipelineJob('k8s-e2e') {
                 git {
                     remote {
                         url('https://github.com/jisequilla/k8s-jenkins-operator-conf.git')
-                        credentials('jenkins-operator')
                     }
                     branches('*/master')
                 }
             }
-            scriptPath('cicd/pipelines/k8s.jenkins')
+            scriptPath('cicd/pipelines/k8s.groovy')
         }
     }
 }

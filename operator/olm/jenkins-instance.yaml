@@ -2,23 +2,10 @@ apiVersion: jenkins.io/v1alpha2
 kind: Jenkins
 metadata:
   name: example
-  namespace: my-jenkins-operator
 spec:
-  configurationAsCode:
-    configurations: []
-    secret:
-      name: ""
-  groovyScripts:
-    configurations: []
-    secret:
-      name: ""
-  jenkinsAPISettings:
-    authorizationStrategy: createUser
   master:
-    disableCSRFProtection: false
     containers:
-      - name: jenkins-master
-        image: jenkins/jenkins:2.319.1-lts-alpine
+      - image: 'jenkins/jenkins:lts'
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 12
@@ -26,17 +13,18 @@ spec:
             path: /login
             port: http
             scheme: HTTP
-          initialDelaySeconds: 100
+          initialDelaySeconds: 80
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
+        name: jenkins-master
         readinessProbe:
-          failureThreshold: 10
+          failureThreshold: 3
           httpGet:
             path: /login
             port: http
             scheme: HTTP
-          initialDelaySeconds: 80
+          initialDelaySeconds: 30
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
@@ -45,11 +33,11 @@ spec:
             cpu: 1500m
             memory: 3Gi
           requests:
-            cpu: "1"
+            cpu: '1'
             memory: 500Mi
   seedJobs:
-    - id: jenkins-operator
-      targets: "cicd/jobs/*.jenkins"
-      description: "Jenkins Operator repository"
+    - description: Jenkins Operator repository
+      id: jenkins-operator
       repositoryBranch: master
-      repositoryUrl: https://github.com/jisequilla/k8s-jenkins-operator-conf.git
+      repositoryUrl: 'https://github.com/jisequilla/k8s-jenkins-operator-conf.git'
+      targets: cicd/jobs/*.jenkins
