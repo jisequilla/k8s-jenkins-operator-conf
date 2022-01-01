@@ -2,3 +2,7 @@
 apiVersion: v2
 name: jenkins
 version: 1.0.0
+dependencies:
+  - name: jenkins-operator
+    version: 0.6.0
+    repository: https://raw.githubusercontent.com/jenkinsci/kubernetes-operator/master/chart
