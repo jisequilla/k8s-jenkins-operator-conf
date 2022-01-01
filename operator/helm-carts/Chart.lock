@@ -1,6 +1,0 @@
-dependencies:
-- name: jenkins-operator
-  repository: https://raw.githubusercontent.com/jenkinsci/kubernetes-operator/master/chart
-  version: 0.6.0
-digest: sha256:99e7b7bd08b44a107f67be48ae49d5b8cc07dd4a21b4881474fc8d5ad6eac4ef
-generated: "2022-01-01T02:44:21.952686+01:00"
