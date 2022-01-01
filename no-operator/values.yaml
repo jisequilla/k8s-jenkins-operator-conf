@@ -315,7 +315,24 @@ controller:
   # etc.  Best reference is https://<jenkins_url>/configuration-as-code/reference.  The example below creates a welcome message:
   JCasC:
     defaultConfig: true
-    configScripts: {}
+    configScripts: 
+      jenkins:
+        jobs:
+          - script: >
+              pipelineJob("Seed or update all pipelines") {
+              definition {
+                  cpsScm {
+                      scm {
+                          git{
+                            remote {
+                              url("https://github.com/jisequilla/k8s-jenkins-operator-conf.git")
+                            }
+                            branch("*/main")
+                          }
+                      }
+                  }
+                }
+              }
     #  welcome-message: |
     #    jenkins:
     #      systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
@@ -333,22 +350,7 @@ controller:
     authorizationStrategy: |-
       loggedInUsersCanDoAnything:
         allowAnonymousRead: false
-    jobs:
-      - script: >
-          pipelineJob("Seed or update all pipelines") {
-          definition {
-              cpsScm {
-                  scm {
-                      git{
-                        remote {
-                          url("https://github.com/jisequilla/k8s-jenkins-operator-conf.git")
-                        }
-                        branch("*/main")
-                      }
-                  }
-              }
-            }
-          }
+    
 
   # Optionally specify additional init-containers
   customInitContainers: []
