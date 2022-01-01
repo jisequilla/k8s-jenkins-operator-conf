@@ -316,7 +316,14 @@ controller:
   JCasC:
     defaultConfig: true
     configScripts: 
-      jobs: |
+    # welcome-message: |
+    #   jenkins:
+    #     systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+    # Ignored if securityRealm is defined in controller.JCasC.configScripts and
+    # ignored if controller.enableXmlConfig=true as controller.securityRealm takes precedence
+    
+    # add repo with dsl jobs
+    jobs: |
         - script: >
             pipelineJob("Seed or update all pipelines") {
             definition {
@@ -332,11 +339,7 @@ controller:
                 }
               }
             }
-    #  welcome-message: |
-    #    jenkins:
-    #      systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
-    # Ignored if securityRealm is defined in controller.JCasC.configScripts and
-    # ignored if controller.enableXmlConfig=true as controller.securityRealm takes precedence
+
     securityRealm: |-
       local:
         allowsSignup: false
